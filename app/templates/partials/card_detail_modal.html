@@ -1,0 +1,30 @@
+<!-- Modal para Visualização Detalhada da Cartela -->
+<div class="modal fade" id="cardDetailModal" tabindex="-1" aria-labelledby="cardDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-card border border-secondary-subtle shadow-xl">
+            <div class="modal-header border-secondary-subtle">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="avatar-circle-sm" id="modal-card-avatar" style="background-color: #6366f1;">
+                        <i class="bi bi-person-fill"></i>
+                    </span>
+                    <div>
+                        <h5 class="modal-title mb-0" id="modal-card-participant-name">Cartela do Participante</h5>
+                        <small class="text-secondary" id="modal-card-stats">0 de 24 acertos (0%)</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body p-3 text-center">
+                <div class="bingo-card-wrapper mx-auto" id="modal-card-render-container">
+                    <!-- Rendered dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer border-secondary-subtle justify-content-between">
+                <div class="fs-xs text-secondary">
+                    <i class="bi bi-info-circle me-1"></i> A casa central <span class="badge bg-warning text-dark">FREE</span> já vem marcada.
+                </div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

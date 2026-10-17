@@ -1,0 +1,554 @@
+/* ==========================================================================
+   BINGO MASTER - MODERN STYLING SYSTEM
+   Design: Modern Dark Glassmorphism, Micro-animations, Mobile-first
+   ========================================================================== */
+
+:root {
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+    --color-bg-base: #0b0f19;
+    --color-bg-surface: #111827;
+    --color-bg-card: rgba(17, 24, 39, 0.75);
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-glow: rgba(99, 102, 241, 0.3);
+
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    --ball-gold-gradient: radial-gradient(circle at 35% 30%, #fef08a 0%, #f59e0b 60%, #b45309 100%);
+    --ball-drawn-gradient: radial-gradient(circle at 30% 30%, #a7f3d0 0%, #10b981 60%, #047857 100%);
+}
+
+body {
+    background-color: var(--color-bg-base);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.08) 0px, transparent 50%);
+    background-attachment: fixed;
+    font-family: var(--font-body);
+    min-height: 100vh;
+    color: #e2e8f0;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-text {
+    font-family: var(--font-heading);
+}
+
+/* Glassmorphism Cards */
+.bg-glass {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.bg-card {
+    background: rgba(23, 32, 54, 0.95);
+    backdrop-filter: blur(16px);
+}
+
+.glass-card {
+    background: rgba(17, 24, 39, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    transition: all 0.2s ease;
+}
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+/* Typography Helpers */
+.fs-xs { font-size: 0.75rem; }
+.fs-sm { font-size: 0.875rem; }
+.fw-black { font-weight: 900; }
+.fw-extrabold { font-weight: 800; }
+.letter-spacing-1 { letter-spacing: 0.08em; }
+
+.text-gradient {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Brand Navbar */
+.brand-ball {
+    font-size: 1.6rem;
+    display: inline-flex;
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6));
+}
+
+.brand-text {
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    font-size: 1.35rem;
+}
+
+/* Giant 3D Bingo Ball */
+.bingo-ball-stage {
+    width: 170px;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bingo-ball-giant {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--ball-gold-gradient);
+    box-shadow: 
+        inset -8px -8px 20px rgba(0, 0, 0, 0.6),
+        inset 8px 8px 16px rgba(255, 255, 255, 0.5),
+        0 15px 35px rgba(245, 158, 11, 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bingo-ball-giant.rolling {
+    animation: ballRoll 0.6s infinite linear;
+}
+
+.bingo-ball-giant.popping {
+    animation: ballPop 0.5s ease-out;
+}
+
+@keyframes ballRoll {
+    0% { transform: rotate(0deg) scale(0.95); }
+    50% { transform: rotate(180deg) scale(1.03); }
+    100% { transform: rotate(360deg) scale(0.95); }
+}
+
+@keyframes ballPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.ball-letter {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    line-height: 1;
+}
+
+.ball-number {
+    font-family: var(--font-heading);
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #111827;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.ball-shadow {
+    position: absolute;
+    bottom: 5px;
+    width: 100px;
+    height: 18px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* Gradient Buttons */
+.btn-gradient-primary {
+    background: var(--primary-gradient);
+    border: none;
+    color: #ffffff;
+    transition: all 0.25s ease;
+}
+.btn-gradient-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px -5px rgba(168, 85, 247, 0.5);
+    color: #ffffff;
+}
+.btn-gradient-primary:active {
+    transform: translateY(0);
+}
+
+/* Master Board (75 Pedras) */
+.master-board-table-wrapper {
+    overflow-x: auto;
+    border-radius: 0.75rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--color-border);
+    padding: 0.5rem;
+}
+
+.master-board-table {
+    border-collapse: separate;
+    border-spacing: 4px;
+    width: 100%;
+}
+
+.letter-cell {
+    width: 44px;
+    min-width: 44px;
+    height: 40px;
+    border-radius: 8px;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.letter-b { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+.letter-i { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.letter-n { background: linear-gradient(135deg, #10b981, #047857); }
+.letter-g { background: linear-gradient(135deg, #f59e0b, #b45309); }
+.letter-o { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+
+.ball-cell-wrapper {
+    padding: 2px !important;
+}
+
+.board-ball {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: 0 auto;
+}
+
+.board-ball.drawn {
+    background: var(--ball-drawn-gradient);
+    color: #064e3b;
+    border-color: rgba(255, 255, 255, 0.6);
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+    transform: scale(1.05);
+}
+
+.board-ball.last-drawn {
+    background: var(--ball-gold-gradient);
+    color: #451a03;
+    border-color: #ffffff;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.9);
+    animation: pulseLastDrawn 1.2s infinite alternate;
+}
+
+@keyframes pulseLastDrawn {
+    0% { transform: scale(1.05); box-shadow: 0 0 10px rgba(245, 158, 11, 0.6); }
+    100% { transform: scale(1.15); box-shadow: 0 0 20px rgba(245, 158, 11, 1); }
+}
+
+/* Fita de Últimas Pedras Sorteadas */
+.recent-balls-scroll {
+    min-height: 54px;
+}
+
+.recent-ball-pill {
+    flex-shrink: 0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.recent-ball-pill.is-newest {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #111827;
+    border-color: #fef08a;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(15px) scale(0.8); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* Placar Dinâmico (Leaderboard) */
+.leaderboard-list {
+    max-height: 480px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.leaderboard-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    transition: all 0.25s ease;
+}
+
+.leaderboard-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.leaderboard-item.rank-first {
+    border-color: rgba(245, 158, 11, 0.4);
+    background: rgba(245, 158, 11, 0.06);
+}
+
+.avatar-circle, .avatar-circle-sm {
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.avatar-circle {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+}
+
+.avatar-circle-sm {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+}
+
+/* Color Picker Radios */
+.color-badge-option input[type="radio"] {
+    display: none;
+}
+.color-badge-option .color-circle {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.color-badge-option input[type="radio"]:checked + .color-circle {
+    transform: scale(1.15);
+    border-color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Cartelas de Bingo dos Participantes */
+.bingo-card {
+    background: #0f172a;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s, border-color 0.2s;
+}
+.bingo-card:hover {
+    border-color: rgba(99, 102, 241, 0.5);
+    transform: translateY(-3px);
+}
+
+.bingo-card-header {
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.bingo-col-header {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1rem;
+    border-radius: 6px;
+    color: #ffffff;
+}
+
+.bingo-cell {
+    aspect-ratio: 1 / 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    position: relative;
+    user-select: none;
+    transition: all 0.2s;
+}
+
+.bingo-cell.marked {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.4));
+    border-color: rgba(16, 185, 129, 0.6);
+    color: #6ee7b7;
+    font-weight: 900;
+}
+
+.bingo-cell.marked::after {
+    content: "✓";
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 0.65rem;
+    color: #10b981;
+}
+
+.bingo-cell.free-space {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.4));
+    border-color: rgba(245, 158, 11, 0.7);
+    color: #fef08a;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+}
+
+.bingo-cell.free-space::after {
+    content: "★";
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 0.7rem;
+    color: #f59e0b;
+}
+
+/* Winner Celebration Styles */
+.trophy-bounce {
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+}
+
+.sticky-top-card {
+    position: sticky;
+    top: 5rem;
+}
+
+/* History Card */
+.history-round-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: background 0.2s;
+}
+.history-round-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .bingo-ball-stage {
+        width: 140px;
+        height: 140px;
+    }
+    .bingo-ball-giant {
+        width: 110px;
+        height: 110px;
+    }
+    .ball-number {
+        font-size: 2.4rem;
+    }
+    .board-ball {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+    }
+    .letter-cell {
+        width: 36px;
+        min-width: 36px;
+        font-size: 0.9rem;
+    }
+    .sticky-top-card {
+        position: static;
+    }
+}
+
+/* Botão de Vitória do Participante */
+.btn-winner-bingo {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #111827;
+    border: 1px solid #fde68a;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-winner-bingo:hover {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #000000;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.7);
+}
+.btn-winner-bingo:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Modal de Confirmação Moderno */
+.confirm-icon-wrapper {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.12);
+    border: 2px solid rgba(245, 158, 11, 0.3);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    animation: pulseIcon 2s infinite ease-in-out;
+}
+.confirm-icon-wrapper.danger {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+@keyframes pulseIcon {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+/* Item de Participante Moderno */
+.participant-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    border-radius: 0.85rem;
+    padding: 0.85rem 1rem;
+    transition: all 0.25s ease;
+}
+.participant-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+

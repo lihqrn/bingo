@@ -1,0 +1,60 @@
+<!-- Modal Gerenciador de Participantes -->
+<div class="modal fade" id="participantModal" tabindex="-1" aria-labelledby="participantModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-card border border-secondary-subtle shadow-lg">
+            <div class="modal-header border-secondary-subtle">
+                <h5 class="modal-title d-flex align-items-center gap-2" id="participantModalLabel">
+                    <i class="bi bi-person-plus-fill text-warning"></i>
+                    <span>Adicionar Participante</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-add-participant" onsubmit="event.preventDefault(); window.BingoApp.addParticipantFromForm();">
+                    <div class="mb-3">
+                        <label for="input-participant-name" class="form-label fw-semibold">Nome do Participante</label>
+                        <input type="text" class="form-control bg-dark border-secondary text-light" id="input-participant-name" placeholder="Ex: Maria Clara, João Pedro..." required maxlength="30" autocomplete="off">
+                        <div class="form-text text-secondary">Cadastre os jogadores da partida para acompanhar quem está jogando com as cartelas físicas.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold d-block">Cor do Marcador</label>
+                        <div class="d-flex gap-2 flex-wrap" id="color-picker-container">
+                            <label class="color-badge-option" title="Índigo">
+                                <input type="radio" name="participant-color" value="#6366f1" aria-label="Cor Índigo" checked>
+                                <span class="color-circle" style="background-color: #6366f1;"></span>
+                            </label>
+                            <label class="color-badge-option" title="Rosa">
+                                <input type="radio" name="participant-color" value="#ec4899" aria-label="Cor Rosa">
+                                <span class="color-circle" style="background-color: #ec4899;"></span>
+                            </label>
+                            <label class="color-badge-option" title="Ciano">
+                                <input type="radio" name="participant-color" value="#06b6d4" aria-label="Cor Ciano">
+                                <span class="color-circle" style="background-color: #06b6d4;"></span>
+                            </label>
+                            <label class="color-badge-option" title="Esmeralda">
+                                <input type="radio" name="participant-color" value="#10b981" aria-label="Cor Esmeralda">
+                                <span class="color-circle" style="background-color: #10b981;"></span>
+                            </label>
+                            <label class="color-badge-option" title="Âmbar">
+                                <input type="radio" name="participant-color" value="#f59e0b" aria-label="Cor Âmbar">
+                                <span class="color-circle" style="background-color: #f59e0b;"></span>
+                            </label>
+                            <label class="color-badge-option" title="Violeta">
+                                <input type="radio" name="participant-color" value="#8b5cf6" aria-label="Cor Violeta">
+                                <span class="color-circle" style="background-color: #8b5cf6;"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-2">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning fw-semibold px-4">
+                            <i class="bi bi-plus-circle me-1"></i> Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

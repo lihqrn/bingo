@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bingo Master Interativo{% endblock %}</title>
+    <meta name="description" content="Sistema de Bingo Interativo moderno com sorteio em tempo real, placar dinâmico, cartelas responsivas e histórico de rodadas.">
+
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom Modern CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-surface text-light">
+
+    <!-- Top Navigation Bar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-glass border-bottom border-secondary-subtle sticky-top">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                    <span class="brand-ball">
+                        <i class="bi bi-disc-fill text-warning"></i>
+                    </span>
+                    <span class="brand-text">BINGO<span class="text-gradient">MASTER</span></span>
+                </a>
+
+                <div class="d-flex align-items-center gap-2 order-lg-last">
+                    <!-- Audio & Voice Toggles -->
+                    <button class="btn btn-sm btn-outline-light rounded-pill d-flex align-items-center gap-1" id="btn-toggle-sound" title="Ligar/Desligar Efeitos Sonoros" aria-label="Efeitos sonoros">
+                        <i class="bi bi-volume-up-fill" id="icon-sound"></i>
+                        <span class="d-none d-sm-inline fs-xs">Som</span>
+                    </button>
+                    <button class="btn btn-sm btn-outline-light rounded-pill d-flex align-items-center gap-1" id="btn-toggle-voice" title="Ligar/Desligar Voz da Pedra" aria-label="Locutor de voz">
+                        <i class="bi bi-mic-fill" id="icon-voice"></i>
+                        <span class="d-none d-sm-inline fs-xs">Locutor</span>
+                    </button>
+
+                    <!-- History Button -->
+                    <button class="btn btn-sm btn-glass rounded-pill d-flex align-items-center gap-1 text-info border-info-subtle" id="btn-open-history" data-bs-toggle="modal" data-bs-target="#historyModal" title="Histórico de Rodadas Anteriores">
+                        <i class="bi bi-clock-history"></i>
+                        <span class="d-none d-md-inline fs-xs fw-semibold">Histórico</span>
+                        <span class="badge bg-info text-dark rounded-pill ms-1" id="badge-history-count">0</span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto text-secondary fs-sm align-items-center">
+                        <li class="nav-item d-flex align-items-center me-3">
+                            <i class="bi bi-check-circle-fill text-success me-1"></i> Armazenamento: <strong class="text-white ms-1">Browser Storage</strong>
+                        </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <i class="bi bi-award-fill text-warning me-1"></i> Padrão: <strong class="text-white ms-1">75 Bolas (B-I-N-G-O)</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main App Content -->
+    <main class="py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-top border-secondary-subtle py-3 text-center text-secondary fs-xs bg-dark-subtle">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <div>
+                <strong>Bingo Master Interativo</strong> • 100% Client-Side Storage & Animações Dinâmicas
+            </div>
+            <div>
+                Bootstrap 5 • Modern UI Glassmorphism
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Canvas Confetti for Celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <!-- App Modular Scripts -->
+    <script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bingo-engine.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

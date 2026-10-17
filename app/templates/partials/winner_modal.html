@@ -1,0 +1,64 @@
+<!-- Modal de Celebração de BINGO! -->
+<div class="modal fade" id="winnerModal" tabindex="-1" aria-labelledby="winnerModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-card border-warning border-2 shadow-2xl text-center overflow-hidden">
+            <div class="winner-glow-header p-4 position-relative">
+                <div class="confetti-backdrop"></div>
+                <div class="trophy-bounce mb-2">
+                    <i class="bi bi-trophy-fill text-warning display-3"></i>
+                </div>
+                <span class="badge bg-warning text-dark px-3 py-1 fs-6 text-uppercase fw-bold letter-spacing-1">
+                    🎉 É BINGO! 🎉
+                </span>
+                <h2 class="display-6 fw-extrabold text-white mt-2 mb-0" id="winner-name-display">
+                    Nome do Vencedor
+                </h2>
+                <p class="text-warning-subtle fs-sm mb-0 mt-1" id="winner-type-display">
+                    Vitória confirmada na Cartela Física!
+                </p>
+            </div>
+
+            <div class="modal-body p-4 pt-2">
+                <div class="row g-2 text-start mb-3">
+                    <div class="col-6">
+                        <div class="p-3 rounded-3 bg-dark-subtle border border-secondary-subtle">
+                            <small class="text-secondary d-block">Pedras Sorteadas</small>
+                            <span class="fs-4 fw-bold text-info" id="winner-balls-count">0</span>
+                            <span class="text-secondary fs-xs">/ 75</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded-3 bg-dark-subtle border border-secondary-subtle">
+                            <small class="text-secondary d-block">Última Pedra</small>
+                            <span class="fs-4 fw-bold text-warning" id="winner-last-ball">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pedras sorteadas para conferência imediata -->
+                <div class="mb-3 text-start">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-secondary fw-semibold">Pedras sorteadas para conferência:</small>
+                        <span class="badge bg-secondary-subtle text-light fs-xs" id="winner-balls-badge">0 pedras</span>
+                    </div>
+                    <div class="p-2 rounded-3 bg-dark border border-secondary-subtle overflow-y-auto d-flex flex-wrap gap-1" style="max-height: 110px;" id="winner-drawn-balls-container">
+                        <!-- Badges das pedras inseridos via JavaScript -->
+                    </div>
+                </div>
+
+                <p class="text-secondary fs-xs mb-3">
+                    Esta rodada já foi registrada com sucesso no seu histórico local!
+                </p>
+
+                <div class="d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-warning btn-lg fw-bold shadow-sm" onclick="window.BingoApp.startNewRoundFromWinnerModal()">
+                        <i class="bi bi-play-circle-fill me-1"></i> Iniciar Próxima Rodada
+                    </button>
+                    <button type="button" class="btn btn-outline-info py-2 fw-semibold" onclick="window.BingoApp.goToBoardVerification()">
+                        <i class="bi bi-grid-3x3-gap-fill me-1"></i> Conferir Pedras no Painel da Mesa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

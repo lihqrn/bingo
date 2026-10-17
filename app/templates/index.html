@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid px-2 px-md-4">
+
+    <!-- Top Status & Actions Banner -->
+    <div class="row g-3 mb-4">
+        <div class="col-12">
+            <div class="glass-card p-3 p-md-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="round-counter-box text-center px-3 py-2 rounded-3 border border-secondary-subtle bg-dark-subtle">
+                        <small class="text-secondary text-uppercase fw-bold letter-spacing-1 d-block fs-xs">Rodada</small>
+                        <span class="fs-4 fw-extrabold text-warning" id="stat-round-number">1</span>
+                    </div>
+                    <div>
+                        <h1 class="h4 mb-1 fw-bold text-white d-flex align-items-center gap-2">
+                            <span>Mesa de Bingo</span>
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-xs">Ao Vivo</span>
+                        </h1>
+                        <p class="text-secondary fs-xs mb-0">
+                            Pedras sorteadas: <strong class="text-info fs-sm" id="stat-drawn-count">0</strong> / 75 
+                            • Restantes: <strong class="text-light fs-sm" id="stat-remaining-count">75</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <button class="btn btn-sm btn-outline-warning d-flex align-items-center gap-1 rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#participantModal" id="btn-open-add-participant">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span>+ Participante</span>
+                    </button>
+                    <button class="btn btn-sm btn-outline-light d-flex align-items-center gap-1 rounded-pill px-3" id="btn-new-round" onclick="window.BingoApp.promptNewRound()">
+                        <i class="bi bi-arrow-repeat"></i>
+                        <span>Nova Rodada</span>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1 rounded-pill px-2" id="btn-reset-all" title="Reiniciar todo o jogo" onclick="window.BingoApp.promptResetAll()">
+                        <i class="bi bi-power"></i>
+                        <span class="d-none d-sm-inline">Resetar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Grid: Left (Sorteador & Master Board) + Right (Placar Dinâmico) -->
+    <div class="row g-4">
+        
+        <!-- Left Column: Sorteio da Pedra & Painel de 75 Pedras -->
+        <div class="col-12 col-xl-8">
+            <div class="d-flex flex-column gap-4">
+
+                <!-- Sorteador Central Card -->
+                <div class="glass-card p-4 text-center position-relative overflow-hidden">
+                    <div class="spotlight-bg"></div>
+                    
+                    <div class="row align-items-center g-4">
+                        <!-- Big Ball Display -->
+                        <div class="col-12 col-md-5 d-flex flex-column align-items-center justify-content-center">
+                            <div class="bingo-ball-stage position-relative mb-2">
+                                <div class="bingo-ball-giant" id="current-ball-display">
+                                    <span class="ball-letter text-warning" id="current-ball-letter">--</span>
+                                    <span class="ball-number" id="current-ball-number">--</span>
+                                </div>
+                                <div class="ball-shadow"></div>
+                            </div>
+                            <div class="ball-status-text text-secondary fs-sm fw-semibold" id="ball-status-label">
+                                Pronto para sortear!
+                            </div>
+                        </div>
+
+                        <!-- Sorteio Controls -->
+                        <div class="col-12 col-md-7 text-md-start">
+                            <div class="d-flex flex-column gap-3">
+                                <div>
+                                    <button class="btn btn-gradient-primary btn-lg w-100 py-3 rounded-4 fw-extrabold shadow-lg d-flex align-items-center justify-content-center gap-2" id="btn-draw-ball" onclick="window.BingoApp.drawNextBall()">
+                                        <i class="bi bi-dice-5-fill fs-3"></i>
+                                        <span class="fs-4">Sortear Pedra</span>
+                                    </button>
+                                </div>
+
+                                <!-- Autoplay Controls Bar -->
+                                <div class="p-2 rounded-3 bg-dark-subtle border border-secondary-subtle d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-sm btn-outline-info rounded-pill px-3 d-flex align-items-center gap-1" id="btn-toggle-auto" onclick="window.BingoApp.toggleAutoDraw()">
+                                            <i class="bi bi-play-fill" id="icon-auto-draw"></i>
+                                            <span id="label-auto-draw">Auto-Sorteio</span>
+                                        </button>
+                                        <span class="spinner-grow spinner-grow-sm text-info d-none" id="spinner-auto-draw" role="status"></span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 fs-xs text-secondary">
+                                        <label for="select-speed" class="mb-0">Velocidade:</label>
+                                        <select class="form-select form-select-sm bg-dark border-secondary text-light w-auto" id="select-speed" onchange="window.BingoApp.changeSpeed(this.value)">
+                                            <option value="2000">Rápido (2s)</option>
+                                            <option value="3500" selected>Normal (3.5s)</option>
+                                            <option value="5000">Tranquilo (5s)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Últimas Pedras Sorteadas (Fita de Histórico Imediato) -->
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fs-xs text-uppercase text-secondary fw-bold letter-spacing-1">Últimas Pedras:</span>
+                                        <span class="fs-xs text-secondary" id="recent-balls-count">0 saíram</span>
+                                    </div>
+                                    <div class="recent-balls-scroll d-flex gap-2 align-items-center p-2 rounded-3 bg-dark-subtle border border-secondary-subtle overflow-x-auto" id="recent-balls-tray">
+                                        <span class="text-secondary fs-xs px-2" id="recent-balls-empty">Nenhuma pedra sorteada nesta rodada.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master Board: Todas as 75 Pedras (B-I-N-G-O) -->
+                <div class="glass-card p-3 p-md-4" id="master-board-card">
+                    <!-- Banner de Modo Conferência (Ativado quando o usuário confere a vitória) -->
+                    <div class="alert alert-warning border-warning bg-warning bg-opacity-10 d-none mb-3 align-items-center justify-content-between flex-wrap gap-2 shadow-sm" id="verification-banner" role="alert">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-award-fill text-warning fs-3"></i>
+                            <div>
+                                <strong class="text-white d-block">Modo Conferência: BINGO de <span id="verification-winner-name" class="text-warning"></span>!</strong>
+                                <small class="text-secondary">Confira as pedras iluminadas no painel abaixo com a cartela física do jogador.</small>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="window.BingoApp.reopenWinnerModal()">
+                                <i class="bi bi-trophy me-1"></i> Ver Resultado
+                            </button>
+                            <button type="button" class="btn btn-sm btn-warning rounded-pill fw-bold px-3" onclick="window.BingoApp.startNewRound()">
+                                <i class="bi bi-play-circle-fill me-1"></i> Nova Rodada
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h5 mb-0 fw-bold text-white d-flex align-items-center gap-2">
+                            <i class="bi bi-grid-3x3-gap-fill text-warning"></i>
+                            <span>Painel Geral das 75 Pedras</span>
+                        </h2>
+                        <span class="badge bg-secondary-subtle text-light fs-xs">B (1-15) • I (16-30) • N (31-45) • G (46-60) • O (61-75)</span>
+                    </div>
+
+                    <div class="master-board-table-wrapper table-responsive">
+                        <table class="table table-borderless master-board-table align-middle text-center mb-0">
+                            <tbody>
+                                <!-- B Row -->
+                                <tr class="board-row" data-letter="B">
+                                    <td class="letter-cell letter-b fw-black fs-5">B</td>
+                                    {% for n in range(1, 16) %}
+                                    <td class="ball-cell-wrapper">
+                                        <div class="board-ball" id="board-ball-{{ n }}" data-number="{{ n }}">
+                                            {{ n }}
+                                        </div>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <!-- I Row -->
+                                <tr class="board-row" data-letter="I">
+                                    <td class="letter-cell letter-i fw-black fs-5">I</td>
+                                    {% for n in range(16, 31) %}
+                                    <td class="ball-cell-wrapper">
+                                        <div class="board-ball" id="board-ball-{{ n }}" data-number="{{ n }}">
+                                            {{ n }}
+                                        </div>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <!-- N Row -->
+                                <tr class="board-row" data-letter="N">
+                                    <td class="letter-cell letter-n fw-black fs-5">N</td>
+                                    {% for n in range(31, 46) %}
+                                    <td class="ball-cell-wrapper">
+                                        <div class="board-ball" id="board-ball-{{ n }}" data-number="{{ n }}">
+                                            {{ n }}
+                                        </div>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <!-- G Row -->
+                                <tr class="board-row" data-letter="G">
+                                    <td class="letter-cell letter-g fw-black fs-5">G</td>
+                                    {% for n in range(46, 61) %}
+                                    <td class="ball-cell-wrapper">
+                                        <div class="board-ball" id="board-ball-{{ n }}" data-number="{{ n }}">
+                                            {{ n }}
+                                        </div>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                <!-- O Row -->
+                                <tr class="board-row" data-letter="O">
+                                    <td class="letter-cell letter-o fw-black fs-5">O</td>
+                                    {% for n in range(61, 76) %}
+                                    <td class="ball-cell-wrapper">
+                                        <div class="board-ball" id="board-ball-{{ n }}" data-number="{{ n }}">
+                                            {{ n }}
+                                        </div>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Column: Participantes da Rodada -->
+        <div class="col-12 col-xl-4">
+            <div class="glass-card p-3 p-md-4 sticky-top-card">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary-subtle">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-people-fill text-warning fs-5"></i>
+                        <h2 class="h5 mb-0 fw-bold text-white">Participantes</h2>
+                    </div>
+                    <span class="badge bg-warning text-dark rounded-pill fw-bold" id="badge-participants-count">0 Jogadores</span>
+                </div>
+
+                <div class="fs-xs text-secondary mb-3 d-flex justify-content-between align-items-center">
+                    <span>Cartelas físicas em jogo • Clique no botão quando alguém gritar Bingo!</span>
+                </div>
+
+                <!-- Participant List -->
+                <div class="leaderboard-list d-flex flex-column gap-2" id="leaderboard-container">
+                    <!-- Populated dynamically -->
+                    <div class="text-center py-4 text-secondary" id="leaderboard-empty">
+                        <i class="bi bi-people fs-2 mb-2 d-block opacity-50"></i>
+                        <p class="mb-1">Nenhum participante adicionado.</p>
+                        <button class="btn btn-sm btn-outline-warning rounded-pill mt-2" data-bs-toggle="modal" data-bs-target="#participantModal">
+                            Adicionar Primeiro Participante
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-3 border-top border-secondary-subtle">
+                    <button class="btn btn-outline-light w-100 rounded-3 d-flex align-items-center justify-content-center gap-2 py-2" data-bs-toggle="modal" data-bs-target="#participantModal">
+                        <i class="bi bi-person-plus"></i>
+                        <span>Adicionar Mais Jogadores</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Inclusão dos Modais Partiais -->
+{% include "partials/participant_modal.html" %}
+{% include "partials/history_modal.html" %}
+{% include "partials/winner_modal.html" %}
+{% include "partials/confirm_modal.html" %}
+
+{% endblock %}

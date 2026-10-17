@@ -1,0 +1,24 @@
+<!-- Modal de Confirmação Moderno (Substitui alerts e confirms nativos) -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-card border border-secondary-subtle shadow-2xl overflow-hidden">
+            <div class="modal-body p-4 text-center">
+                <div class="confirm-icon-wrapper mb-3 mx-auto d-flex align-items-center justify-content-center" id="confirm-modal-icon-container">
+                    <i class="bi bi-exclamation-triangle-fill text-warning fs-1" id="confirm-modal-icon"></i>
+                </div>
+                <h5 class="modal-title fw-bold text-white mb-2" id="confirmModalLabel">Confirmar Ação</h5>
+                <p class="text-secondary fs-sm mb-4" id="confirm-modal-message">
+                    Tem certeza de que deseja realizar esta operação?
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal" id="btn-confirm-cancel">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger px-4 rounded-pill fw-semibold shadow-sm" id="btn-confirm-action">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
